@@ -10,17 +10,31 @@ const GutiButton = () => {
     const [showButton, setShowButton] = useState(true);
     const [showImage, setShowImage] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
+    const [shuffledArray, setShuffledArray] = useState([police, babu, chor, dakat]);
 
     const imageArray = [police, babu, chor, dakat];
-    const myguti = 2;
+    
 
     // const buttonClicking = () => {
     //     setShowButton(false);
     //     setShowImage(true);
     
     //   };
+    const shuffleArray = (array) => {
+        let newArray = array.slice(); // Create a copy of the original array
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+      };
+     const myArray = shuffleArray(imageArray);
+     console.log(myArray);
+    const myguti= 0;
+      
 
     const buttonClicking = (index) => {
+        setShuffledArray(shuffleArray(shuffledArray));
         setShowButton(false);
         setShowImage(true);
         setSelectedButton(index);
@@ -43,7 +57,7 @@ const GutiButton = () => {
                 {showImage && selectedButton === index && (
                   <img
                     id='shah'
-                    src={imageArray[myguti]}
+                    src={myArray[myguti]}
                     alt="Displayed Image"
                   />
                 )}
@@ -96,6 +110,7 @@ img{
 #shah{
     height: 400px;
     width: 400px;
+   
 }
 
 
