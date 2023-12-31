@@ -3,15 +3,16 @@ import "./HomeBtn.css";
 
 export default function HomeBtn(props) {
     const { btnTxt, nav, userData } = props;
+    const navigate = useNavigate();
 
-    function afterClick() {
-        const navigate = useNavigate();
-        navigate(nav, { state: { userData: userData } });
+    function afterClick() {        
+        navigate(nav, { state: { userData: userData } });   
+        console.log(nav);
     }
 
     return (
-        <div className="home-btn-container" onClick={afterClick}>
+        <button className="home-btn-container" onClick={afterClick}>
             {btnTxt}
-        </div>
+        </button>
     );
 }

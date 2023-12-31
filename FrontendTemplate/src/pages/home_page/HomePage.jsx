@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import avatars from "../../components/avatars";
 import appLogo from "../../assets/appLogo.png";
 import "./HomePage.css";
-import { Input, Button } from "antd";
 import HomeBtn from "../../components/home_btn/HomeBtn";
 
 export default function () {
@@ -24,9 +23,9 @@ export default function () {
             </div>
           </div>
 
-          <HomeBtn btnTxt="Play with A.I." nav="/home" userData={userData} />
-          <HomeBtn btnTxt="Play Online" nav="/home" userData={userData} />
-          <HomeBtn btnTxt="Play with Friends" nav="/home" userData={userData} />
+          <HomeBtn btnTxt="Play with A.I." nav="/ai" userData={userData} />
+          <HomeBtn btnTxt="Play Online" nav="/online" userData={userData} />
+          <HomeBtn btnTxt="Play with Friends" nav="/room" userData={userData} />
         </div>
       </div>
     </>
