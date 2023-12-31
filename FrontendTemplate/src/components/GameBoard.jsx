@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Players from "./Players";
 import ShakeHand from "./ShakeHand";
 
-const GameBoard = () => {
+const GameBoard = ({scores, addScore, setScore}) => {
   const playerName = "Rafi"; // Replace with the actual player name
   const playerImage = "";
 
@@ -22,17 +22,15 @@ const GameBoard = () => {
         </div>
         <div className="player2n4">
           <div className="player2">
-            <div>
               <Players
                 playerName={playerName}
                 playerImage={playerImage}
                 playerScore={123}
                 isTopBtm={false}
               />
-            </div>
           </div>
           <div id="shake">
-            <ShakeHand />
+            <ShakeHand scores={scores} addScore = {addScore} setScore={setScore}/>
           </div>
           <div id="player4">
             <Players
@@ -67,19 +65,22 @@ const Wrapper = styled.section`
   .player2n4 {
     display: flex;
     flex-grow: 1;
-    justify-content: space-between;
   }
   .player2 {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
   }
-  #shake {
-    display: grid;
-    place-items: center;
+  #shake {    
+    flex-grow: 1;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   #player4 {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
   }
 
   .player1 {

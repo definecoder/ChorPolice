@@ -5,7 +5,7 @@ import GutiButton from './GutiButton';
 
 
 
-const ShakeHand = () => {
+const ShakeHand = ({scores, addScore, setScore}) => {
 
 
 const [showButton, setShowButton] = useState(true);
@@ -45,7 +45,7 @@ const [showButton, setShowButton] = useState(true);
 
   return (
     <Wrapper>
-       <div className='shake'>
+       <div className='shakee'>
        {showButton && <button className='rounded-button1' onClick={handleButtonClick}>Guti Shake</button>}
       {showImage && (
         <img 
@@ -58,8 +58,7 @@ const [showButton, setShowButton] = useState(true);
 
             {showGuti && (
           <div className='guti-button'>
-            <GutiButton shufArray={shuffledArray}/>
-
+            <GutiButton shufArray={shuffledArray} scores={scores} addScore = {addScore} setScore={setScore} restart={()=>{setShowButton(true); setGuti(false)}}/>
           </div>
         )}
        </div>
@@ -88,6 +87,16 @@ const Wrapper = styled.section `
     color: #fff; /* Default text color */
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .shakee {
+    width: 100%;
+    height: 100%;    
+  }
+
+  .guti-button{
+    width: 100%;
+    height: 100%;
   }
 
   .rounded-button1:hover {

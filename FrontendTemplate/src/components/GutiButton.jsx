@@ -5,24 +5,37 @@ import babu from "../assets/babu.png";
 import police from "../assets/police.png";
 import chor from "../assets/chor.png";
 import dakat from "../assets/dakat.png";
+import { Button } from "antd";
 
-const GutiButton = ({ shufArray }) => {
+const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
+
   const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
   const [policeState, setPoliceState] = useState(false);
+  const [lastState, setLastState] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [policeGuess, setPoliceGuess] = useState(-1);
   const gotImage = [chor, dakat, police, babu];
+  const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];
+
   var selectedIndex;
 
   const myguti = 0;
   console.log(shufArray);
 
   const buttonClicking = (index) => {
-    console.log(shufArray[index]);
-    selectedIndex = shufArray[index];
+    //console.log("before " + shufArray);
+    //console.log("index : " + index);    
+    const tmp = shufArray[index];
+    shufArray[index] = shufArray[0];
+    shufArray[0] = tmp;
+    //console.log("after" + shufArray);
+    setSelectedImage(shufArray[0]);
+
     // TODO : DISTRIBUTE 3 to ai
-    // res: [0, 1, 3, 2] 
+    // res: [0, 1, 3, 2]
+    
 
     setShowButton(false);
     setShowImage(true);
@@ -30,18 +43,88 @@ const GutiButton = ({ shufArray }) => {
   };
 
   const imageClick = () => {
-    
     setShowImage(false);
     setPoliceState(true);
     // render new component
     // police_success = 0 / 1
+  };
+
+  function getPolice(x){
+    for(let i = 0; i < 4; i++){
+      if(shufArray[i] == x) return i;
+    }
   }
 
   return (
     <Wrapper>
       <div className="guti-buttons">
         <div className="gutis">
-          {policeState && (<div>hello</div>)}
+          {lastState && <div className="last-card">
+                পুলিশ সঠিক ধরেছেন <br />
+                চোর <span>+৪০</span> <br />
+                ডাকাত <span>+৬০</span> <br />
+                বাবু <span>+১০০</span> <br />
+                পুলিশ <span>+৮০</span> <br />
+                <Button onClick={() => {
+                    setLastState(false);
+                    setScore(addScore([80,80,80,80], scores));
+                    console.log(scores);
+                    restart();
+                }}> continue </Button>
+             </div>}
+          {policeState && (
+            <div className="police-state">
+              <div className="police-state-top">
+                <div className="police-state-top-left">
+                  <img src={gotImage[selectedImage]} alt="" />
+                </div>
+                <div className="police-state-top-right">
+                  <div>
+                    আপনি পেয়েছেনঃ &nbsp; <b>{bangla[selectedImage]}</b>
+                  </div>
+                  <div>
+                    {selectedImage != 2 && <span>পুলিশ হলোঃ &nbsp; <b>{getPolice(2)}</b></span>}
+                    {selectedImage == 2 && <span>বাবু হলোঃ &nbsp; <b>{getPolice(3)}</b></span>}
+                    
+                  </div>
+                </div>
+              </div>
+              <div className="police-state-btm">
+                {selectedImage == 2 && (
+                  <div classsName="police-state-btm">
+                    <Button
+                      className="jayga"
+                      onClick={() => {
+                        setLastState(true);
+                        setPoliceState(false);
+                      }}
+                    >
+                      Bot 1
+                    </Button>
+                    <Button
+                      className="jayga"
+                      onClick={() => {
+                        setLastState(true);
+                        setPoliceState(false);
+                      }}
+                    >
+                      Bot 2
+                    </Button>
+                  </div>
+                )}
+                {selectedImage != 2 && (
+                  <Button
+                    onClick={() => {
+                      setLastState(true);
+                      setPoliceState(false);
+                    }}
+                  >
+                    Continue
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
           <div className="guti-row">
             {Array.from({ length: 2 }, (_, index) => (
               <div key={index} className="guti">
@@ -54,9 +137,11 @@ const GutiButton = ({ shufArray }) => {
                   <img
                     id="shah"
                     //here put image source;
-                    src={gotImage[shufArray[index]]} // use the index to access the array element
+                    src={gotImage[selectedImage]} // use the index to access the array element
                     alt="Displayed Image"
-                    onClick={() => {imageClick()}}
+                    onClick={() => {
+                      imageClick();
+                    }}
                   />
                 )}
               </div>
@@ -73,9 +158,11 @@ const GutiButton = ({ shufArray }) => {
                 {showImage && selectedButton === index + 2 && (
                   <img
                     id="shah"
-                    src={gotImage[shufArray[index + 2]]}
+                    src={gotImage[selectedImage]}
                     alt="Displayed Image"
-                    onClick={() => {imageClick()}}
+                    onClick={() => {
+                      imageClick();
+                    }}
                   />
                 )}
               </div>
@@ -103,10 +190,61 @@ const Wrapper = styled.section`
     animation: shake 0.5s ease-in-out infinite;
   }
 
+  .last-card {
+    width: 300px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .police-state-top-left img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    animation: none;
+  }
+
   #shah {
     height: 100%;
     width: 100%;
   }
+
+  .police-state {
+  }
+
+  .police-state-top {
+    height: 200px;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .police-state-top-left {
+    width: 50%;
+  }
+
+  .police-state-top-left img {
+    width: 80% !important;
+    height: 100%;
+  }
+
+  .police-state-top-right {
+    width: 50%;
+  }
+
+  .jayga {
+    margin: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .police-state-btm {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media (max-width: 768px) {
     #shah {
       height: 200px;
@@ -117,14 +255,32 @@ const Wrapper = styled.section`
       width: 80px;
       object-fit: cover;
     }
+    .police-state-top {
+      height: 80px;
+      width: 170px;
+      font-size: 10px;
+    }
+    .jayga {
+      margin: 10px;
+    }
   }
   @keyframes shake {
-  0% { transform: translate(0); }
-  25% { transform: translate(0,-5px); }
-  50% { transform: translate(0, 5px); }
-  75% { transform: translate(0, -5px); }
-  100% { transform: translate(0); }
-}
+    0% {
+      transform: translate(0);
+    }
+    25% {
+      transform: translate(0, -5px);
+    }
+    50% {
+      transform: translate(0, 5px);
+    }
+    75% {
+      transform: translate(0, -5px);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
 `;
 
 export default GutiButton;
