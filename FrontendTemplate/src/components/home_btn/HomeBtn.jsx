@@ -6,7 +6,7 @@ export default function HomeBtn(props) {
     const navigate = useNavigate();
 
     function afterClick() {        
-        navigate(nav, { state: { userData: userData } });   
+        navigate(nav, { state: { ...userData } });   
         console.log(nav);
     }
 
