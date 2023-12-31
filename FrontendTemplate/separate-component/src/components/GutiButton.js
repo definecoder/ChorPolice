@@ -9,14 +9,14 @@ const GutiButton = () => {
         <div className='gutis'>
             <div className='guti'>
                       <button className='rounded-button'>
-                    Guti 1
+                          <img  src={kagoj}  alt="Button Image" />
                            
                 </button>
             </div>
             <div className='guti'>
                   <button className='rounded-button'>
                    
-                           Guti 2
+                     <img  src={kagoj}  alt="Button Image" />
                 </button>
             </div>
 
@@ -26,12 +26,12 @@ const GutiButton = () => {
             <div className='guti'>
                   <button className='rounded-button'>
                     
-                           Guti 3
+                      <img  src={kagoj}  alt="Button Image" />
                 </button>
             </div>
             <div className='guti'>
             <button className='rounded-button'>
-                    Guit 4
+                  <img  src={kagoj}  alt="Button Image" />
                            
                 </button>
             </div>
@@ -47,43 +47,20 @@ const GutiButton = () => {
 const Wrapper = styled.section `
 
 .guti-buttons{
-    height: 240px;
-    width: 240px;
+    height: 200px;
+    width: 200px;
     
 }
 .gutis{
     display: flex;
 }
-.guti{
-    height: 120px;
-    width: 120px;
-}
+
 img{
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
     object-fit: cover;
 }
-.rounded-button {
-    font-size: 20px;
-    height: 80px;
-    width: 100px;
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #3498db; /* Default background color */
-    color: #fff; /* Default text color */
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-  }
 
-  .rounded-button:hover {
-    background-color: #2980b9; /* Hover background color */
-  }
-
-  .rounded-button:active {
-    transform: scale(0.95); /* Active (click) effect */
-  }
 
 `;
 

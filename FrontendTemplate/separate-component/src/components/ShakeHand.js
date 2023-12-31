@@ -38,6 +38,7 @@ const [showButton, setShowButton] = useState(true);
        {showButton && <button className='rounded-button1' onClick={handleButtonClick}>Guti Shake</button>}
       {showImage && (
         <img 
+          id='shaking'
           src={shake}
           alt="Displayed Image"
           
@@ -60,7 +61,7 @@ const [showButton, setShowButton] = useState(true);
 const Wrapper = styled.section `
 
 
-img{
+#shaking{
    
     height: 500px
 }
