@@ -1,37 +1,45 @@
-const port = 8282
-
-const express = require('express');
-const { createServer } = require('node:http');
-const { join } = require('node:path');
-const { Server } = require('socket.io');
-
+const express = require("express");
 const app = express();
-const server = createServer(app);
-const io = new Server(server);
+const http = require("http");
+const cors = require("cors");
+const { Server } = require("socket.io");
+app.use(cors());
 
+const server = http.createServer(app);
+const connectedUsers = [];
 
-app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected : ' + socket.id);
-  io.emit('chat message', socket.id + ' aisoin, shobe salam dew!')
+io.on("connection", (socket) => {
+    console.log(`User Connected: ${socket.id}`);
+  
+    socket.on("join_room", (data) => {
+      socket.join(data);
+     
+    });
+    socket.on("user_list", (data) => {
+          console.log(data);
+      });
+  
+    socket.on("send_message", (data) => {
+      socket.to(data.room).emit("receive_message", data);
+    });
 
-  socket.on('disconnect', () => {
-    console.log(socket.id + 'user disconnected');
-    io.emit('chat message', socket.id + ' gesoin gi gusa koria!');
+  socket.on("send_guti", (data) => {
+    //console.log(data);
+    socket.to(data.room).emit("receive_guti", data);
   });
 
-  socket.on('chat message', (msg) => {
-
-    msg = `${socket.id} : ${msg}`;
-    io.emit('chat message', msg);
-  })
-
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
 
-
-server.listen(port, () => {
-  console.log('server running at http://localhost:'+ port);
+server.listen(3001, () => {
+  console.log("SERVER RUNNING");
 });
