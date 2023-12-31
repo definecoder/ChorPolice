@@ -5,38 +5,41 @@ import ChatModal from "../../components/ChatModal";
 import { useState } from "react";
 import GameBoard from "../../components/GameBoard";
 
+import { addScore, getTotalScore } from "../../components/gameControllers";
+import { useLocation } from "react-router-dom";
+
+
 export default function AIPage() {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const scores = [
+  const userData = useLocation().state;
+
+  const [scores, setScore] = useState([
     ["Amit", 0, 100, 80, 60],
     ["Mehraj", 0, 100, 80, 60],
     ["Shawon", 0, 100, 80, 60],
     ["Nafi", 0, 100, 80, 60],
-  ];
-  var totalScore = [];
-  const round = [100, 0, 60, 40];
-  function addScore(round) {
-    for (let i = 0; i < scores.length; i++) {
-      scores[i].push(round[i]);
-    }
+  ]);
+
+  const round = [100, 0, 60, 40];  
+  var totalScore = getTotalScore(scores);
+  console.log(totalScore);  
+
+  function nice() {
+    const newScore = addScore(round, scores);  
+    setScore(newScore);
   }
-  addScore(round);
-  function getTotalScore() {
-    totalScore = [0, 0, 0, 0];
-    for (let i = 0; i < scores.length; i++) {
-      for (let j = 1; j < scores[i].length; j++) {
-        totalScore[i] += scores[i][j];
-      }
-    }
-    console.log(totalScore);
+
+  function initiateGame() {
+    setScore([[userData.username],["bot-1"],["bot-2"],["bot-3"]]);
   }
-  getTotalScore();
+
   return (
     <>
       <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       <FloatButton
         icon={<CommentOutlined />}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {setIsModalOpen(true); nice()}}
       />
       <div className="ai-canvas">
         <div className="ai-left">
