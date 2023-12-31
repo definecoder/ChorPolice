@@ -1,6 +1,12 @@
 import "./AIPage.css";
+import { FloatButton } from "antd";
+import { CommentOutlined } from "@ant-design/icons";
+import ChatModal from "../../components/ChatModal";
+import { useState } from "react";
+import GameBoard from "../../components/GameBoard";
 
 export default function AIPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const scores = [
     ["Amit", 0, 100, 80, 60],
     ["Mehraj", 0, 100, 80, 60],
@@ -27,11 +33,14 @@ export default function AIPage() {
   getTotalScore();
   return (
     <>
+      <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <FloatButton
+        icon={<CommentOutlined />}
+        onClick={() => setIsModalOpen(true)}
+      />
       <div className="ai-canvas">
         <div className="ai-left">
-          {totalScore.map((score) => (
-            <div> {score} </div>
-          ))}
+          <GameBoard />
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>

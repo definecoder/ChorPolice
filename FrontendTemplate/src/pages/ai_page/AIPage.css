@@ -29,3 +29,18 @@
     height: 100%;
     border: 1px solid black;
 }
+
+@media (max-width: 768px) {
+    .ai-canvas{
+        flex-direction: column;        
+    }
+
+    .ai-left{
+        width: 100vw;
+        height: 75vh;
+    }
+
+    .ai-right {
+        width: 100vw;
+    }
+}
