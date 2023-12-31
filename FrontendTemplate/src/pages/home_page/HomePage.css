@@ -1,0 +1,81 @@
+/* Default styles for larger screens */
+.home-canvas {
+    display: flex;
+    height: 100vh;
+    width: 100%;  
+  }
+  
+  .home-left {
+    height: 100%;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .home-left img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+  }
+  
+  .home-right {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .home-right-header{
+    display:  flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    text-align: left;
+  }
+
+  .home-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;   
+  }
+  
+  .home-avatar img {
+      width: 50%;
+  }
+
+  .home-welcome-text{
+    margin-bottom: 20px;
+    font-size: 30px;
+  }
+
+  .home-username{
+    color: brown;
+    font-weight: bold;
+  }
+  
+  /* Media query for mobile devices (max-width: 768px) */
+  @media screen and (max-width: 768px) {
+    .home-canvas {
+      margin-top: 5vh;
+      flex-direction: column;
+      height: auto;
+      align-items: center;
+    }
+  
+    .home-left {
+      height: 20vh;
+    }
+  
+    .home-right {
+      width: 100%; 
+    }
+  
+    .home-avatar img {
+      width: 30%;
+    }
+  
+  }
+  

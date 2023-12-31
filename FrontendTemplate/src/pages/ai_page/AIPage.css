@@ -1,0 +1,46 @@
+.ai-canvas {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.ai-left {
+    width: 75vw;
+    height: 100%;
+}
+
+.ai-right {
+    text-align: center;
+    width: 25vw;    
+    background-color: rgb(209, 209, 209);
+}
+
+.leaderboard-body {
+    width: 100%;
+    display: flex;
+}
+
+.leaderboard-body::-webkit-scrollbar {
+    display: none;
+}
+
+.leaderboard-col {
+    width: 25%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+@media (max-width: 768px) {
+    .ai-canvas{
+        flex-direction: column;        
+    }
+
+    .ai-left{
+        width: 100vw;
+        height: 75vh;
+    }
+
+    .ai-right {
+        width: 100vw;
+    }
+}
