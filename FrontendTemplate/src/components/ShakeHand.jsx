@@ -4,14 +4,26 @@ import shake from '../assets/shuffle.gif';
 import GutiButton from './GutiButton';
 
 
+
 const ShakeHand = () => {
 
 
 const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [showGuti, setGuti] = useState(false);
+  const [shuffledArray, setShuffledArray] = useState([0, 1, 2, 3]);
+
+  const shuffleArray = (array) => {
+    let newArray = array.slice(); // Create a copy of the original array
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
 
   const handleButtonClick = () => {
+    setShuffledArray(shuffleArray(shuffledArray));
     setShowButton(false);
     setShowImage(true);
 
@@ -21,13 +33,12 @@ const [showButton, setShowButton] = useState(true);
       }, 4200);
   };
 
-  useEffect(() => {
-    if (showGuti) {
-      // Code to run after 4200ms
-      // For example, you can make an API call, show another div, etc.
-      console.log('4200ms passed. Now show another div or perform other actions.');
-    }
-  }, [showGuti]);
+//   useEffect(() => {
+//     if (showGuti) {
+      
+//       console.log('4200ms passed. Now show another div or perform other actions.');
+//     }
+//   }, [showGuti]);
 
   
 
@@ -47,7 +58,7 @@ const [showButton, setShowButton] = useState(true);
 
             {showGuti && (
           <div className='guti-button'>
-            <GutiButton/>
+            <GutiButton shufArray={shuffledArray}/>
 
           </div>
         )}
@@ -69,9 +80,7 @@ const Wrapper = styled.section `
     font-size: 20px;
     height: 40px;
     width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
@@ -89,7 +98,7 @@ const Wrapper = styled.section `
     transform: scale(0.95); /* Active (click) effect */
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
 
     #shaking{
    

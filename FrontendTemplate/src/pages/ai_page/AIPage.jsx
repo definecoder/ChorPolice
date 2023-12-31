@@ -2,7 +2,7 @@ import "./AIPage.css";
 import { FloatButton } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import ChatModal from "../../components/ChatModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GameBoard from "../../components/GameBoard";
 
 import { addScore, getTotalScore } from "../../components/gameControllers";
@@ -13,6 +13,7 @@ export default function AIPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userData = useLocation().state;
+  var initiated = false;
 
   const [scores, setScore] = useState([
     ["Amit", 0, 100, 80, 60],
@@ -32,7 +33,12 @@ export default function AIPage() {
 
   function initiateGame() {
     setScore([[userData.username],["bot-1"],["bot-2"],["bot-3"]]);
+    initiated = true;
   }
+
+  useEffect(() => {
+    if(!initiated) initiateGame();
+  }, []);
 
   return (
     <>
