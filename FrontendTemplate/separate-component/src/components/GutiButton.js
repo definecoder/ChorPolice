@@ -6,39 +6,28 @@ import police from './images/police.png';
 import chor from './images/chor.png';
 import dakat from './images/dakat.png';
 
-const GutiButton = () => {
+const GutiButton = ({shufArray}) => {
     const [showButton, setShowButton] = useState(true);
     const [showImage, setShowImage] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
-    const [shuffledArray, setShuffledArray] = useState([police, babu, chor, dakat]);
-
-    const imageArray = [police, babu, chor, dakat];
+    const [selectedImage, setSelectedImage] = useState(null);
+    const gotImage= [chor,dakat,police,babu];
     
 
-    // const buttonClicking = () => {
-    //     setShowButton(false);
-    //     setShowImage(true);
     
-    //   };
-    const shuffleArray = (array) => {
-        let newArray = array.slice(); // Create a copy of the original array
-        for (let i = newArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
-      };
-     const myArray = shuffleArray(imageArray);
-     console.log(myArray);
     const myguti= 0;
+    console.log(shufArray);
       
 
     const buttonClicking = (index) => {
-        setShuffledArray(shuffleArray(shuffledArray));
+        console.log(shufArray[index]);
+        
         setShowButton(false);
         setShowImage(true);
         setSelectedButton(index);
       };
+
+      
     
 
 
@@ -46,7 +35,7 @@ const GutiButton = () => {
     <Wrapper>
             <div className='guti-buttons'>
         <div className='gutis'>
-          <div className='guti-row'>
+        <div className='guti-row'>
             {Array.from({ length: 2 }, (_, index) => (
               <div key={index} className='guti'>
                 {showButton && (
@@ -57,7 +46,8 @@ const GutiButton = () => {
                 {showImage && selectedButton === index && (
                   <img
                     id='shah'
-                    src={myArray[myguti]}
+                    //here put image source;
+                    src={gotImage[shufArray[index]]} // use the index to access the array element
                     alt="Displayed Image"
                   />
                 )}
@@ -68,14 +58,14 @@ const GutiButton = () => {
             {Array.from({ length: 2 }, (_, index) => (
               <div key={index + 2} className='guti'>
                 {showButton && (
-                  <button onClick={() => buttonClicking(index + 2)}>
+                  <button onClick={() => buttonClicking(index +2)}>
                     <img src={kagoj} alt="Button Image" />
                   </button>
                 )}
                 {showImage && selectedButton === index + 2 && (
                   <img
                     id='shah'
-                    src={imageArray[myguti]}
+                    src={gotImage[shufArray[index + 2]]}
                     alt="Displayed Image"
                   />
                 )}
@@ -111,6 +101,24 @@ img{
     height: 400px;
     width: 400px;
    
+}
+@media (max-width: 768px) {
+    #shah{
+        height: 200px;
+        width: 200px;
+       
+    }
+    img{
+        height: 80px;
+        width: 80px;
+        object-fit: cover;
+    }
+    .guti-buttons{
+        height: 160px;
+        width: 160px;
+        
+    }
+
 }
 
 

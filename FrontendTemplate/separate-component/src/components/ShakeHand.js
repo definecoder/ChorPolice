@@ -4,14 +4,26 @@ import shake from './shuffle.gif';
 import GutiButton from './GutiButton';
 
 
+
 const ShakeHand = () => {
 
 
 const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [showGuti, setGuti] = useState(false);
+  const [shuffledArray, setShuffledArray] = useState([0, 1, 2, 3]);
+
+  const shuffleArray = (array) => {
+    let newArray = array.slice(); // Create a copy of the original array
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
 
   const handleButtonClick = () => {
+    setShuffledArray(shuffleArray(shuffledArray));
     setShowButton(false);
     setShowImage(true);
 
@@ -46,7 +58,7 @@ const [showButton, setShowButton] = useState(true);
 
             {showGuti && (
           <div className='guti-button'>
-            <GutiButton/>
+            <GutiButton shufArray={shuffledArray}/>
 
           </div>
         )}
