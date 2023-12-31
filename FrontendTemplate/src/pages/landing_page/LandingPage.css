@@ -1,0 +1,70 @@
+/* Default styles for larger screens */
+.landing-canvas {
+  display: flex;
+  height: 100vh;
+  width: 100%;  
+}
+
+.landing-left {
+  height: 100%;
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-left img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+}
+
+.landing-right {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.landing-avatar img {
+    width: 50%;
+}
+
+.username-input {
+    width: 60%;
+    margin: 20px;
+}
+
+/* Media query for mobile devices (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  .landing-canvas {
+    margin-top: 5vh;
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+
+  .landing-left {
+    width: 50vw;
+    margin-bottom: 5vh;
+  }
+
+  .landing-right {
+    width: 100%; 
+  }
+
+  .landing-avatar img {
+    width: 30%;
+  }
+
+  .username-input {
+    width: 80%;
+  }
+}
