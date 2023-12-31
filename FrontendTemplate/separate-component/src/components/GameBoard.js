@@ -2,21 +2,25 @@ import React from 'react'
 import styled from "styled-components";
 import Players from './Players';
 import ShakeHand from './ShakeHand';
-import GutiButton from './GutiButton';
+
 
 const GameBoard = () => {
+    const playerName = 'Rafi'; // Replace with the actual player name
+    const playerImage = '&#128516;';
+
+
   return (
     <Wrapper>
     <div className='game-board'>
         <div className='player1'>
             <div>
-                <Players/>
+                <Players playerName={playerName} playerImage={playerImage}/>
             </div>
         </div>
         <div className='player2n4'>
            <div className='player2'>
                 <div>
-                  <Players/>
+                  <Players playerName={playerName} playerImage={playerImage}/>
                 </div>
                
            </div>
@@ -24,7 +28,7 @@ const GameBoard = () => {
                 <ShakeHand/>
            </div>
            <div id='player4'>
-                <Players/>
+                <Players playerName={playerName} playerImage={playerImage}/>
            </div>
 
 
@@ -32,7 +36,7 @@ const GameBoard = () => {
 
 
         <div className='player1'>
-             <Players/>
+             <Players playerName={playerName} playerImage={playerImage}/>
         </div>
     
     
@@ -47,8 +51,7 @@ const Wrapper = styled.section `
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    justi
-    height: 100vh;
+   
     width: 75%;
     border: 2px solid red; 
     
@@ -56,7 +59,7 @@ const Wrapper = styled.section `
 }
 .player2n4{
     
-    height: 600px;
+    height: 680px;
     display: flex;
     justify-content: space-between;
 
@@ -86,6 +89,26 @@ const Wrapper = styled.section `
     height: 120px;
 }
 
+@media (max-width: 600px) {
+    .game-board{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+       width:100%;
+        height: 75%;
+        border: 2px solid red; 
+        
+        
+    }
+    .player2n4{
+    
+        height: 450px;
+        display: flex;
+        justify-content: space-between;
+    
+    }
+
+  }
 
 
 `;

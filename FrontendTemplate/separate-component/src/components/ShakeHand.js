@@ -87,6 +87,17 @@ const Wrapper = styled.section `
     transform: scale(0.95); /* Active (click) effect */
   }
 
+  @media (max-width: 600px) {
+
+    #shaking{
+   
+        height: 250px
+    }
+
+
+  }
+  
+
 `;
 
 export default ShakeHand;

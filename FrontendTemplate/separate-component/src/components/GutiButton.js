@@ -62,6 +62,7 @@ img{
 }
 
 
+
 `;
 
 export default GutiButton;
