@@ -1,0 +1,25 @@
+.home-btn-container{
+    background-color: rgb(251, 254, 205);
+    width: 60%;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.home-btn-container:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+
+    .home-btn-container{
+        width: 80%;
+    }
+
+}
