@@ -5,7 +5,7 @@ import ShakeHand from './ShakeHand';
 
 
 const GameBoard = () => {
-    const playerName = 'Rafi'; // Replace with the actual player name
+    const playerName = ['Amit', 'Nixon', 'Mehraj', 'Shawon']; 
     const playerImage = '&#128516;';
 
 
@@ -14,13 +14,13 @@ const GameBoard = () => {
     <div className='game-board'>
         <div className='player1'>
             <div>
-                <Players playerName={playerName} playerImage={playerImage}/>
+                <Players playerName={playerName[0]} playerImage={playerImage}/>
             </div>
         </div>
         <div className='player2n4'>
            <div className='player2'>
                 <div>
-                  <Players playerName={playerName} playerImage={playerImage}/>
+                  <Players playerName={playerName[1]} playerImage={playerImage}/>
                 </div>
                
            </div>
@@ -28,7 +28,7 @@ const GameBoard = () => {
                 <ShakeHand/>
            </div>
            <div id='player4'>
-                <Players playerName={playerName} playerImage={playerImage}/>
+                <Players playerName={playerName[2]} playerImage={playerImage}/>
            </div>
 
 
@@ -36,7 +36,7 @@ const GameBoard = () => {
 
 
         <div className='player1'>
-             <Players playerName={playerName} playerImage={playerImage}/>
+             <Players playerName={playerName[3]} playerImage={playerImage}/>
         </div>
     
     
@@ -89,7 +89,7 @@ const Wrapper = styled.section `
     height: 120px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .game-board{
         display: flex;
         flex-direction: column;

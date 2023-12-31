@@ -31,7 +31,7 @@ const Wrapper = styled.section `
     font-size: 40px;
     padding: 20px;
 }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .player-container{
         display: flex;
         flex-direction: column;

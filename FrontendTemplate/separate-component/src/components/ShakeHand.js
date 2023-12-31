@@ -21,13 +21,12 @@ const [showButton, setShowButton] = useState(true);
       }, 4200);
   };
 
-  useEffect(() => {
-    if (showGuti) {
-      // Code to run after 4200ms
-      // For example, you can make an API call, show another div, etc.
-      console.log('4200ms passed. Now show another div or perform other actions.');
-    }
-  }, [showGuti]);
+//   useEffect(() => {
+//     if (showGuti) {
+      
+//       console.log('4200ms passed. Now show another div or perform other actions.');
+//     }
+//   }, [showGuti]);
 
   
 
@@ -87,7 +86,7 @@ const Wrapper = styled.section `
     transform: scale(0.95); /* Active (click) effect */
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
 
     #shaking{
    
