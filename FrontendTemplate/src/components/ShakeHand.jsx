@@ -5,7 +5,7 @@ import GutiButton from './GutiButton';
 
 
 
-const ShakeHand = ({scores, addScore, setScore}) => {
+const ShakeHand = ({scores, addScore, setScore, playerName}) => {
 
 
 const [showButton, setShowButton] = useState(true);
@@ -58,7 +58,7 @@ const [showButton, setShowButton] = useState(true);
 
             {showGuti && (
           <div className='guti-button'>
-            <GutiButton shufArray={shuffledArray} scores={scores} addScore = {addScore} setScore={setScore} restart={()=>{setShowButton(true); setGuti(false)}}/>
+            <GutiButton playerName={playerName} shufArray={shuffledArray} scores={scores} addScore = {addScore} setScore={setScore} restart={()=>{setShowButton(true); setGuti(false)}}/>
           </div>
         )}
        </div>

@@ -7,7 +7,7 @@ import chor from "../assets/chor.png";
 import dakat from "../assets/dakat.png";
 import { Button } from "antd";
 
-const GutiButton = ({ shufArray, restart, scores, addScore, setScore }) => {
+const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore }) => {
   const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
@@ -56,7 +56,7 @@ const GutiButton = ({ shufArray, restart, scores, addScore, setScore }) => {
 
   function getPolice(x) {
     for (let i = 0; i < 4; i++) {
-      if (shufArray[i] == x) return i;
+      if (shufArray[i] == x) return playerName[i];
     }
   }
 
@@ -71,6 +71,15 @@ const GutiButton = ({ shufArray, restart, scores, addScore, setScore }) => {
   function isPoliceCorrect(){
     if(isChor && shufArray[policeGuess] == 0) return true;
     else if(!isChor && shufArray[policeGuess] == 1) return true;
+    else{
+      const currentTimestamp = new Date().getTime();
+    const randomValue = currentTimestamp % 2;
+
+      if(randomValue==0){
+         return true;
+      }
+      else return false;
+    }
     return false;
   }
 
@@ -132,12 +141,12 @@ const GutiButton = ({ shufArray, restart, scores, addScore, setScore }) => {
                   <div>
                     {selectedImage != 2 && (
                       <span>
-                        পুলিশ হলোঃ &nbsp; <b>{getPolice(2)}</b>
+                        পুলিশ হলোঃ &nbsp; <b> {getPolice(2)}</b>
                       </span>
                     )}
                     {selectedImage == 2 && (
                       <span>
-                        বাবু হলোঃ &nbsp; <b>{getPolice(3)}</b>
+                        বাবু হলোঃ &nbsp; <b> {getPolice(3)}</b>
                       </span>
                     )}
                   </div>

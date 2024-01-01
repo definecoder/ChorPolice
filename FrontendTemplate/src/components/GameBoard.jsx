@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Players from "./Players";
 import ShakeHand from "./ShakeHand";
 
-const GameBoard = ({scores, addScore, setScore}) => {
-  const playerName = "Rafi"; // Replace with the actual player name
+const GameBoard = ({scores, addScore, setScore, playerName}) => {
+   // Replace with the actual player name
   const playerImage = "";
 
   return (
@@ -13,7 +13,7 @@ const GameBoard = ({scores, addScore, setScore}) => {
         <div className="player1">
           <div>
             <Players
-              playerName={playerName}
+              playerName={playerName[3]}
               playerImage={playerImage}
               playerScore={123}
               isTopBtm={true}
@@ -23,18 +23,18 @@ const GameBoard = ({scores, addScore, setScore}) => {
         <div className="player2n4">
           <div className="player2">
               <Players
-                playerName={playerName}
+                playerName={playerName[1]}
                 playerImage={playerImage}
                 playerScore={123}
                 isTopBtm={false}
               />
           </div>
           <div id="shake">
-            <ShakeHand scores={scores} addScore = {addScore} setScore={setScore}/>
+            <ShakeHand scores={scores} addScore = {addScore} setScore={setScore} playerName={playerName}/>
           </div>
           <div id="player4">
             <Players
-              playerName={playerName}
+              playerName={playerName[2]}
               playerImage={playerImage}
               playerScore={123}
               isTopBtm={false}
@@ -44,7 +44,7 @@ const GameBoard = ({scores, addScore, setScore}) => {
 
         <div className="player1">
           <Players
-            playerName={playerName}
+            playerName={playerName[0]}
             playerImage={playerImage}
             playerScore={123}
             isTopBtm={true}
