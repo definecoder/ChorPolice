@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 
 export default function AIPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNames, setSelectedNames] = useState([]);
   const userData = useLocation().state;
   var initiated = false;
 
@@ -19,6 +20,7 @@ export default function AIPage() {
     ["Shawon", 0, 100, 80, 60],
     ["Nafi", 0, 100, 80, 60],
   ]);
+  const peopleNames = ["John", "Jane", "Alex", "Mark", "Ella", "Liam", "Lucy", "Finn", "Kate", "Ryan", "Emma", "Luke", "Rose", "Paul", "Lisa", "Jack", "Anna", "Eric", "Mia", "Jake"];
 
   const round = [100, 0, 60, 40];
   var totalScore = getTotalScore(scores);
@@ -28,12 +30,38 @@ export default function AIPage() {
     console.log("rerender");
   }, [scores]);
 
+  // useEffect(() => {
+    
+  //   const selectRandomNames = () => {
+  //     const shuffledNames = [...peopleNames];
+      
+  //     for (let i = shuffledNames.length - 1; i > 0; i--) {
+  //       const j = Math.floor(Math.random() * (i + 1));
+  //       [shuffledNames[i], shuffledNames[j]] = [shuffledNames[j], shuffledNames[i]];
+  //     }
+  //     return shuffledNames.slice(0, 2);
+  //   };
+
+  //   // Set selected names when component mounts
+  //   setSelectedNames(selectRandomNames());
+  // }, []);
+
   function update(new_score){
     setScore(new_score);
   }
 
   function initiateGame() {
-    setScore([[userData.username], ["bot-1"], ["bot-2"], ["bot-3"]]);    
+    //setScore([[userData.username], ["bot-1"], ["bot-1"],["bot-1"],  ]);   
+    const currentTimestamp = new Date().getTime();
+    const randomValue = currentTimestamp % 19;
+    const a = peopleNames[randomValue];
+    const b = peopleNames[randomValue+1];
+    const c = peopleNames[randomValue+2];
+
+    setSelectedNames([userData.username,a,b,c]);
+    
+    setScore([[userData.username], [a], [b],[c],  ]); 
+   
     initiated = true;
   }
 
@@ -52,7 +80,7 @@ export default function AIPage() {
       />
       <div className="ai-canvas">
         <div className="ai-left">
-          <GameBoard scores={scores} addScore = {addScore} setScore={setScore} />
+          <GameBoard scores={scores} addScore = {addScore} setScore={setScore} playerName={selectedNames}/>
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>
