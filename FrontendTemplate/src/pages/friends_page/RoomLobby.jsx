@@ -33,10 +33,9 @@ useEffect(() => {
         console.log(users.length);
         
         setUsers(users);
-        if(users.length >= 2){
+        if(users.length === 2){
             // setPlayer2( users[1].username);
             // console.log(player2);
-            
             
         }
       });
@@ -62,7 +61,7 @@ useEffect(() => {
         <center className="lobby-code">{room}</center>
         <div className="lobby-container">
             {players.map((player) => {
-                return <div className="lobby-card"><img src={avatars[player.avatar]} alt="" /> <span> {players.username} </span>
+                return <div className="lobby-card"><img src={avatars[player.avatar]} alt="" /> <span> {player.username} </span>
                  {!player.isHost && (<Button onClick={() => {}}> Kick </Button>) }</div>;
             })}        
         </div>  
