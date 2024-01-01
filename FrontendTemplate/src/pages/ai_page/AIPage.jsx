@@ -80,7 +80,7 @@ export default function AIPage() {
       />
       <div className="ai-canvas">
         <div className="ai-left">
-          <GameBoard scores={scores} addScore = {addScore} setScore={setScore} playerName={selectedNames}/>
+          <GameBoard totalScore={totalScore} scores={scores} addScore = {addScore} setScore={setScore} playerName={selectedNames}/>
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>
