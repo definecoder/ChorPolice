@@ -70,7 +70,7 @@ const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore
 
   function isPoliceCorrect(){
     if(isChor && shufArray[policeGuess] == 0) return true;
-    else if(!isChor && shufArray[policeGuess] == 1) return true;
+else if(!isChor && shufArray[policeGuess] == 1) return true;
     else{
       const currentTimestamp = new Date().getTime();
     const randomValue = currentTimestamp % 2;

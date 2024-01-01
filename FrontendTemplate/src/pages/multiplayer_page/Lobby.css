@@ -1,0 +1,36 @@
+.lobby-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lobby-card{
+    width: 20vw;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lobby-card img {
+    width: 100%;
+}
+
+.lobby-card span {
+    margin-top: -40px;
+    font-size: 20px;
+}
+
+.lobby-code {
+    font-size: 25px;
+}
+
+@media screen and (max-width: 768px) {
+    .lobby-card{
+        width: 40vw;
+        height: 40vh;
+        margin: 10px;
+    }
+}
