@@ -27,14 +27,14 @@ function Chat({ socket, username, room }) {
 
   useEffect(() => {
 
-    socket.emit("my_room", { room, username });
+    
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
       
     });
 
     return () => socket.removeListener('receive_message')
-  }, [socket, room, username]);
+  }, [socket]);
 
   return (
     <Wrapper>

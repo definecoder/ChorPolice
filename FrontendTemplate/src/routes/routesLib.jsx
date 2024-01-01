@@ -7,6 +7,7 @@ import Friend_page from "../pages/friends_page/Friend_page";
 import FriendsPage from "../pages/friends_page/FriendsPage";
 import Multiplayer from "../pages/multiplayer_page/Multiplayer";
 import Lobby from "../pages/multiplayer_page/Lobby";
+import DummyLobby from "../pages/multiplayer_page/DummyLobby";
 
 function RoutesLib() {
   return (
@@ -17,7 +18,8 @@ function RoutesLib() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/ai" element={<AIPage />} />
           <Route path="/room" element={<FriendsPage />} />
-          <Route path="/lobby" element={<Lobby />} />
+          <Route path="/lobby" element={<Friend_page />} />
+
           <Route path="/multiplayer" element={<Multiplayer />} />
         </Routes>
       </BrowserRouter>

@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 app.use(cors());
 
 const server = http.createServer(app);
-const connectedUsers = {};
+const connectedUsers = [];
 
 const io = new Server(server, {
   cors: {
@@ -14,14 +14,32 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+const usersInRoom = {};
 io.on("connection", (socket) => {
 
   
     socket.on("join_room", (data) => {
-      socket.join(data);
-    // console.log(data);
+      socket.join(data.room);
+
+      if (usersInRoom[data.room].length > 4) {
+        // Clear the array
+        usersInRoom[data.room] = [];
+        console.log(`Cleared users in room ${data.room}`);
+      }
+      usersInRoom[data.room].push({ id: socket.id, username: data.username });
+  
      
+      // Emit the updated list of users to the frontend
+      io.to(data.room).emit("users_list", usersInRoom[data.room]);
+      
+     
+    });
+
+
+    socket.on("send_person", (data) => {
+      console.log(data);
+    
+      socket.to(data.room).emit("receive_message", data);
     });
 
     socket.on("send_message", (data) => {
@@ -30,9 +48,6 @@ io.on("connection", (socket) => {
       });
 
      
-
-  
-
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
