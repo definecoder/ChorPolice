@@ -8,9 +8,7 @@ import GameBoard from "../../components/GameBoard";
 import { addScore, getTotalScore } from "../../components/gameControllers";
 import { useLocation } from "react-router-dom";
 
-
 export default function AIPage() {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userData = useLocation().state;
   var initiated = false;
@@ -22,22 +20,25 @@ export default function AIPage() {
     ["Nafi", 0, 100, 80, 60],
   ]);
 
-  const round = [100, 0, 60, 40];  
+  const round = [100, 0, 60, 40];
   var totalScore = getTotalScore(scores);
-  console.log(totalScore);  
+  console.log(totalScore);
 
-  function nice() {
-    const newScore = addScore(round, scores);  
-    setScore(newScore);
+  useEffect(()=>{
+    console.log("rerender");
+  }, [scores]);
+
+  function update(new_score){
+    setScore(new_score);
   }
 
   function initiateGame() {
-    setScore([[userData.username],["bot-1"],["bot-2"],["bot-3"]]);
+    setScore([[userData.username], ["bot-1"], ["bot-2"], ["bot-3"]]);    
     initiated = true;
   }
 
   useEffect(() => {
-    if(!initiated) initiateGame();
+    if (!initiated) initiateGame();
   }, []);
 
   return (
@@ -45,11 +46,13 @@ export default function AIPage() {
       <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       <FloatButton
         icon={<CommentOutlined />}
-        onClick={() => {setIsModalOpen(true); nice()}}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
       />
       <div className="ai-canvas">
         <div className="ai-left">
-          <GameBoard />
+          <GameBoard scores={scores} addScore = {addScore} setScore={setScore} />
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>

@@ -1,10 +1,13 @@
 export function addScore(round, scores) {
-    var update = scores;
-    for (let i = 0; i < update.length; i++) {
-    update[i].push(round[i]);
+    // Create a new array by mapping over the existing scores array
+    const updatedScores = scores.map((score, index) => {
+      // Create a new array with the updated score for each player
+      return [...score, round[index]];
+    });
+  
+    return updatedScores; // Return the new array
   }
-  return update;
-}
+  
 
 export function getTotalScore(scores) {
   const totalScore = [0, 0, 0, 0];
