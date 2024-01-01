@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import kagoj from "../assets/kagoj.png";
 import babu from "../assets/babu.png";
@@ -7,8 +7,7 @@ import chor from "../assets/chor.png";
 import dakat from "../assets/dakat.png";
 import { Button } from "antd";
 
-const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
-
+const GutiButton = ({ shufArray, restart, scores, addScore, setScore }) => {
   const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
@@ -16,17 +15,24 @@ const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
   const [lastState, setLastState] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [policeGuess, setPoliceGuess] = useState(-1);
+  const [isChor, setIsChor] = useState(true);
   const gotImage = [chor, dakat, police, babu];
-  const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];
+  const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];    
+  var curscore = [0, 0, 0, 0];
 
   var selectedIndex;
 
   const myguti = 0;
   console.log(shufArray);
 
+  useEffect(() => {
+    setIsChor(scores[0].length % 2 == 0);
+    console.log(isChor);
+  }, []);
+
   const buttonClicking = (index) => {
     //console.log("before " + shufArray);
-    //console.log("index : " + index);    
+    //console.log("index : " + index);
     const tmp = shufArray[index];
     shufArray[index] = shufArray[0];
     shufArray[0] = tmp;
@@ -35,7 +41,6 @@ const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
 
     // TODO : DISTRIBUTE 3 to ai
     // res: [0, 1, 3, 2]
-    
 
     setShowButton(false);
     setShowImage(true);
@@ -49,29 +54,71 @@ const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
     // police_success = 0 / 1
   };
 
-  function getPolice(x){
-    for(let i = 0; i < 4; i++){
-      if(shufArray[i] == x) return i;
+  function getPolice(x) {
+    for (let i = 0; i < 4; i++) {
+      if (shufArray[i] == x) return i;
     }
   }
+
+  function getChorDakat(){
+    var ans = [];
+    for(var i = 0; i < 4; i++){
+      if(shufArray[i] < 2) ans.push(i);
+    }
+    return ans;
+  }
+
+  function isPoliceCorrect(){
+    if(isChor && shufArray[policeGuess] == 0) return true;
+    else if(!isChor && shufArray[policeGuess] == 1) return true;
+    return false;
+  }
+
+  function getScore() {
+    const newScores = [0, 0, 0, 0]; // Create a new array to store the updated scores
+  
+    for (let i = 0; i < 4; i++) {
+      if (shufArray[i] === 3) newScores[i] = 100;
+      else if (shufArray[i] === 2 && isPoliceCorrect()) newScores[i] = 80;
+      else if (shufArray[i] === 1) {
+        if (isPoliceCorrect() && !isChor) {
+          // Do nothing, leave newScores[i] as 0
+        } else newScores[i] = 60;
+      } else if (shufArray[i] === 0) {
+        if (isPoliceCorrect() && isChor) {
+          // Do nothing, leave newScores[i] as 0
+        } else newScores[i] = 40;
+      }
+    }
+  
+    return newScores;
+  }
+  
 
   return (
     <Wrapper>
       <div className="guti-buttons">
         <div className="gutis">
-          {lastState && <div className="last-card">
-                পুলিশ সঠিক ধরেছেন <br />
-                চোর <span>+৪০</span> <br />
-                ডাকাত <span>+৬০</span> <br />
-                বাবু <span>+১০০</span> <br />
-                পুলিশ <span>+৮০</span> <br />
-                <Button onClick={() => {
-                    setLastState(false);
-                    setScore(addScore([80,80,80,80], scores));
-                    console.log(scores);
-                    restart();
-                }}> continue </Button>
-             </div>}
+          {lastState && (
+            <div className="last-card">
+              {isPoliceCorrect() ? "পুলিশ সঠিক ধরেছেন" : "পুলিশ ভূল ধরেছেন"} <br />
+              চোর <span>{isChor && isPoliceCorrect() ? "+০" : "+৪০"}</span> <br />                 
+              ডাকাত <span>{!isChor && isPoliceCorrect() ? "+০" : "+৬০"}</span> <br />
+              বাবু <span>+১০০</span> <br />
+              পুলিশ <span>{isPoliceCorrect() ? "+৮০" : "+০"}</span> <br />
+              <Button
+                onClick={() => {
+                  setLastState(false);
+                  curscore = getScore();                                    
+                  setScore(addScore(curscore, scores));                
+                  restart();
+                }}
+              >
+                {" "}
+                continue{" "}
+              </Button>
+            </div>
+          )}
           {policeState && (
             <div className="police-state">
               <div className="police-state-top">
@@ -83,12 +130,20 @@ const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
                     আপনি পেয়েছেনঃ &nbsp; <b>{bangla[selectedImage]}</b>
                   </div>
                   <div>
-                    {selectedImage != 2 && <span>পুলিশ হলোঃ &nbsp; <b>{getPolice(2)}</b></span>}
-                    {selectedImage == 2 && <span>বাবু হলোঃ &nbsp; <b>{getPolice(3)}</b></span>}
-                    
+                    {selectedImage != 2 && (
+                      <span>
+                        পুলিশ হলোঃ &nbsp; <b>{getPolice(2)}</b>
+                      </span>
+                    )}
+                    {selectedImage == 2 && (
+                      <span>
+                        বাবু হলোঃ &nbsp; <b>{getPolice(3)}</b>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
+              <div> <center> {isChor == true ? "চোর কে ধরুন" : "ডাকাত কে ধরুন" } </center> </div>
               <div className="police-state-btm">
                 {selectedImage == 2 && (
                   <div classsName="police-state-btm">
@@ -96,19 +151,21 @@ const GutiButton = ({ shufArray , restart, scores, addScore, setScore }) => {
                       className="jayga"
                       onClick={() => {
                         setLastState(true);
-                        setPoliceState(false);
+                        setPoliceState(false);      
+                        setPoliceGuess((getChorDakat())[0]);
                       }}
                     >
-                      Bot 1
+                      {(getChorDakat())[0]}
                     </Button>
                     <Button
                       className="jayga"
                       onClick={() => {
                         setLastState(true);
                         setPoliceState(false);
+                        setPoliceGuess((getChorDakat())[1]);
                       }}
                     >
-                      Bot 2
+                      {(getChorDakat())[1]}
                     </Button>
                   </div>
                 )}
