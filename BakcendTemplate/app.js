@@ -20,14 +20,13 @@ io.on("connection", (socket) => {
   
     socket.on("join_room", (data) => {
       socket.join(data.room);
-
-      if (usersInRoom[data.room].length > 4) {
-        // Clear the array
+      if (!usersInRoom[data.room]) {
         usersInRoom[data.room] = [];
-        console.log(`Cleared users in room ${data.room}`);
       }
+
+      if(data.username !== ""){
       usersInRoom[data.room].push({ id: socket.id, username: data.username });
-  
+      }
      
       // Emit the updated list of users to the frontend
       io.to(data.room).emit("users_list", usersInRoom[data.room]);

@@ -30,21 +30,6 @@ export default function AIPage() {
     console.log("rerender");
   }, [scores]);
 
-  // useEffect(() => {
-    
-  //   const selectRandomNames = () => {
-  //     const shuffledNames = [...peopleNames];
-      
-  //     for (let i = shuffledNames.length - 1; i > 0; i--) {
-  //       const j = Math.floor(Math.random() * (i + 1));
-  //       [shuffledNames[i], shuffledNames[j]] = [shuffledNames[j], shuffledNames[i]];
-  //     }
-  //     return shuffledNames.slice(0, 2);
-  //   };
-
-  //   // Set selected names when component mounts
-  //   setSelectedNames(selectRandomNames());
-  // }, []);
 
   function update(new_score){
     setScore(new_score);

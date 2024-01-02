@@ -32,11 +32,12 @@ useEffect(() => {
       socket.on('users_list', (users) => {
         console.log(users.length);
         
-        setUsers(users);
-        if(users.length === 2){
+        
+        if(users.length <= 4){
             // setPlayer2( users[1].username);
             // console.log(player2);
-            
+
+            setUsers(users);
         }
       });
     }
@@ -59,34 +60,31 @@ useEffect(() => {
     <>
     <center className="lobby-code">LOBBY CODE</center>
         <center className="lobby-code">{room}</center>
-        <div className="lobby-container">
-            {players.map((player) => {
-                return <div className="lobby-card"><img src={avatars[player.avatar]} alt="" /> <span> {player.username} </span>
-                 {!player.isHost && (<Button onClick={() => {}}> Kick </Button>) }</div>;
-            })}        
-        </div>  
+        
+        
       
-      <div className="persons-body">
+      <div className="lobby-container">
         
           {
           
-          users.map((messageContent) => {
+          users.map((messageContent, index) => {
             
             return (
               
-                <div >
+                
                 
                   
-                  <div className="message-meta">
-                  
-                    <p id="author">{messageContent.username}</p>
+                  <div className="lobby-card" key={index}>
+                  <img src={avatars[index+1]} alt="" /> 
+                    <span id="author"> {messageContent.username}</span>
                   </div>
-                </div>
+                
               
             );
           })}
         
       </div>
+      <center><Button > Start Game </Button></center>
       
      
   
