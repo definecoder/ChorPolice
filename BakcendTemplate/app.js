@@ -49,10 +49,13 @@ io.on("connection", (socket) => {
       io.to(data.room).emit("recieve_shuffle", curShuffle[data.room]);
       console.log("shuffle recived and sent to all", curShuffle[data.room]);
     });
-
-
-    // ke konta paise 
+    
     //police kare dhorse
+    socket.on("dhorsi_ore", (data) => {      
+      io.to(data.room).emit("dhorse_ore", data.guess);
+      console.log("police dhorse", usersInRoom[data.room][data.guess]);
+    });
+
     //coninue
 
     socket.on("send_message", (data) => {

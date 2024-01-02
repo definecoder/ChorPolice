@@ -16,7 +16,7 @@ const GutiButtonOnline = ({
   setScore,
   socket,
   username,
-  room
+  room,
 }) => {
   const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
@@ -26,6 +26,7 @@ const GutiButtonOnline = ({
   const [selectedImage, setSelectedImage] = useState(null);
   const [policeGuess, setPoliceGuess] = useState(-1);
   const [isChor, setIsChor] = useState(true);
+  const [showContinue, setShowContinue] = useState(false);
   const gotImage = [chor, dakat, police, babu];
   const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];
   var curscore = [0, 0, 0, 0];
@@ -41,14 +42,28 @@ const GutiButtonOnline = ({
   }, []);
 
   function getIndex() {
-
-    if(scores[0][0] === username) return 0;
-    if(scores[1][0] === username) return 1;
-    if(scores[2][0] === username) return 2;
-    if(scores[3][0] === username) return 3;
+    if (scores[0][0] === username) return 0;
+    if (scores[1][0] === username) return 1;
+    if (scores[2][0] === username) return 2;
+    if (scores[3][0] === username) return 3;
     return 0;
-
   }
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("dhorse_ore", (indx) => {
+        // setLastState(true);
+        // setPoliceState(false);
+        setShowContinue(true);
+        setPoliceGuess(indx);
+      });
+    }
+    return () => {
+      if (socket) {
+        socket.off("dhorse_ore");
+      }
+    };
+  }, [socket]);
 
   const buttonClicking = (index) => {
     //console.log("before " + shufArray);
@@ -56,7 +71,7 @@ const GutiButtonOnline = ({
     //const tmp = shufArray[index];
     //shufArray[index] = shufArray[0];
     //shufArray[0] = tmp;
-    //console.log("after" + shufArray);    
+    //console.log("after" + shufArray);
     setSelectedImage(shufArray[getIndex()]);
 
     // TODO : DISTRIBUTE 3 to ai
@@ -90,15 +105,7 @@ const GutiButtonOnline = ({
 
   function isPoliceCorrect() {
     if (isChor && shufArray[policeGuess] == 0) return true;
-    else if (!isChor && shufArray[policeGuess] == 1) return true;
-    else {
-      const currentTimestamp = new Date().getTime();
-      const randomValue = currentTimestamp % 2;
-
-      if (randomValue == 0) {
-        return true;
-      } else return false;
-    }
+    else if (!isChor && shufArray[policeGuess] == 1) return true;    
     return false;
   }
 
@@ -188,12 +195,17 @@ const GutiButtonOnline = ({
                     <Button
                       className="jayga"
                       onClick={() => {
+                        
+                        socket.emit("dhorsi_ore", {
+                          room: room,
+                          guess: getChorDakat()[0],
+                        });
                         setLastState(true);
                         setPoliceState(false);
                         setPoliceGuess(getChorDakat()[0]);
                       }}
                     >
-                      {getChorDakat()[0]}
+                      {playerName[getChorDakat()[0]]}
                     </Button>
                     <Button
                       className="jayga"
@@ -201,13 +213,17 @@ const GutiButtonOnline = ({
                         setLastState(true);
                         setPoliceState(false);
                         setPoliceGuess(getChorDakat()[1]);
+                        socket.emit("dhorsi_ore", {
+                          room: room,
+                          guess: getChorDakat()[1],
+                        });
                       }}
                     >
-                      {getChorDakat()[1]}
+                      {playerName[getChorDakat()[1]]}
                     </Button>
                   </div>
                 )}
-                {selectedImage != 2 && (
+                {selectedImage != 2 && showContinue && (
                   <Button
                     onClick={() => {
                       setLastState(true);
@@ -216,6 +232,12 @@ const GutiButtonOnline = ({
                   >
                     Continue
                   </Button>
+                )}
+                {selectedImage != 2 && !showContinue && (
+                  <p>
+                    {getPolice(2)} {isChor == true ? "চোর" : "ডাকাত"} কে
+                    ধরছেন...{" "}
+                  </p>
                 )}
               </div>
             </div>
