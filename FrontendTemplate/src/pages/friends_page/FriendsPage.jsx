@@ -19,8 +19,7 @@ function FriendsPage() {
     if (userData.username !== "" && room !== "") {
       const messageData = {
         room: room,
-        username: userData.username,
-        
+        username: userData.username,        
       };
       // jekono api call er jonno ei socket id "socket" or api address ta lagbe.
       socket.emit("join_room", messageData); // "join_room" api link er sathe value send korbe
