@@ -15,7 +15,10 @@ const RoomLobby = ({ socket, username, room }) => {
   const [player2, setPlayer2]= useState("Player 2");
   const [player3, setPlayer3]= useState("Player 3");
   const [player4, setPlayer4]= useState("Player 4");
+  const [gameStart, SetGameStart]= useState(false);
 
+  const userData = useLocation().state;
+  const navigate = useNavigate();
   const [players , setPlayers] = useState([
 
     {avatar: 1, username: username, isHost: true},
@@ -24,6 +27,15 @@ const RoomLobby = ({ socket, username, room }) => {
     {avatar: 4, username: player4, isHost: false},
 
 ]);
+const gameStarted = () => {
+  const usernames = users.map(user => user.username);
+
+   // Navigate to another page and pass usernames as state
+   navigate("/multiplayer", {state : {
+    ...userData,
+    players: usernames,
+}})
+};
 
 
 
@@ -48,13 +60,6 @@ useEffect(() => {
       };
   }, [socket]);
 
-
-
-
-
- 
- 
-
   
   return (
     <>
@@ -70,24 +75,16 @@ useEffect(() => {
           users.map((messageContent, index) => {
             
             return (
-              
-                
-                
-                  
                   <div className="lobby-card" key={index}>
                   <img src={avatars[index+1]} alt="" /> 
                     <span id="author"> {messageContent.username}</span>
                   </div>
-                
-              
             );
           })}
         
       </div>
-      <center><Button > Start Game </Button></center>
+      <center><Button onClick={gameStarted}> Start Game </Button></center>
       
-     
-  
     
     </>
   )
