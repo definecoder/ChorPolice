@@ -1,4 +1,4 @@
-import "./AIPage.css";
+
 import { FloatButton } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import ChatModal from "../../components/ChatModal";
@@ -8,7 +8,7 @@ import GameBoard from "../../components/GameBoard";
 import { addScore, getTotalScore } from "../../components/gameControllers";
 import { useLocation } from "react-router-dom";
 
-export default function AIPage() {
+export default function FriensGame() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
   const userData = useLocation().state;
@@ -28,6 +28,7 @@ export default function AIPage() {
 
   useEffect(()=>{
     console.log("rerender");
+    console.log(userData.players);
   }, [scores]);
 
 
@@ -39,13 +40,22 @@ export default function AIPage() {
     //setScore([[userData.username], ["bot-1"], ["bot-1"],["bot-1"],  ]);   
     const currentTimestamp = new Date().getTime();
     const randomValue = currentTimestamp % 19;
-    const a = peopleNames[randomValue];
+    const a = userData.players[1];
     const b = peopleNames[randomValue+1];
     const c = peopleNames[randomValue+2];
 
-    setSelectedNames([userData.username,a,b,c]);
+   // setSelectedNames([userData.username,a,b,c]);
+
+   const allPlayers = userData.players;
+const myName = userData.username;
+
+// Exclude the current user's name
+const otherPlayers = allPlayers.filter(player => player !== myName);
+
+// Set selectedNames with [myName, ...otherPlayers]
+setSelectedNames([myName, ...otherPlayers]);
     
-    setScore([[userData.username], [a], [b],[c],  ]); 
+    setScore([[userData.username], [otherPlayers[0]], [otherPlayers[1]],[otherPlayers[2]],  ]); 
    
     initiated = true;
   }

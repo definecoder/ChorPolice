@@ -2,6 +2,7 @@ import "./Friend_page.css";
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./chat.jsx";
+import RoomLobby from "./RoomLobby.jsx";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -12,16 +13,24 @@ function Friend_page() {
 
   const joinRoom = () => {
     if (username !== "" && room !== "") {
+      const messageData = {
+        room: room,
+        username: username,
+        
+      };
       // jekono api call er jonno ei socket id "socket" or api address ta lagbe.
-      socket.emit("join_room", room); // "join_room" api link er sathe value send korbe
+      socket.emit("join_room", messageData); // "join_room" api link er sathe value send korbe
       setShowChat(true);
+
+      
     }
   };
 
+
   return (
     <div className="App">
-      {!showChat ? (
-        <div className="joinChatContainer">
+
+<div className="joinChatContainer">
           <h3>Join A Chat</h3>
           <input
             type="text"
@@ -39,8 +48,10 @@ function Friend_page() {
           />
           <button onClick={joinRoom}>Join A Room</button>
         </div>
+      {!showChat ? (
+        <div></div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <RoomLobby socket={socket} username={username} room={room} />
       )}
     </div>
   );

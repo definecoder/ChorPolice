@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Players from "./Players";
 import ShakeHand from "./ShakeHand";
 
-const GameBoard = ({scores, addScore, setScore, playerName}) => {
+const GameBoard = ({totalScore, scores, addScore, setScore, playerName}) => {
    // Replace with the actual player name
   const playerImage = "";
 
@@ -15,7 +15,7 @@ const GameBoard = ({scores, addScore, setScore, playerName}) => {
             <Players
               playerName={playerName[3]}
               playerImage={playerImage}
-              playerScore={123}
+              playerScore={totalScore[3]}
               isTopBtm={true}
             />
           </div>
@@ -25,7 +25,7 @@ const GameBoard = ({scores, addScore, setScore, playerName}) => {
               <Players
                 playerName={playerName[1]}
                 playerImage={playerImage}
-                playerScore={123}
+                playerScore={totalScore[1]}
                 isTopBtm={false}
               />
           </div>
@@ -36,7 +36,7 @@ const GameBoard = ({scores, addScore, setScore, playerName}) => {
             <Players
               playerName={playerName[2]}
               playerImage={playerImage}
-              playerScore={123}
+              playerScore={totalScore[2]}
               isTopBtm={false}
             />
           </div>
@@ -46,7 +46,7 @@ const GameBoard = ({scores, addScore, setScore, playerName}) => {
           <Players
             playerName={playerName[0]}
             playerImage={playerImage}
-            playerScore={123}
+            playerScore={totalScore[0]}
             isTopBtm={true}
           />
         </div>
