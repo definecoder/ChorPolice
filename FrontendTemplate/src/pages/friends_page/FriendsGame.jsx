@@ -1,62 +1,60 @@
-
+import "../ai_page/AIPage.css";
 import { FloatButton } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import ChatModal from "../../components/ChatModal";
 import { useEffect, useState } from "react";
-import GameBoard from "../../components/GameBoard";
+import GameBoardOnline from "../../components/GameBoardOnline";
 
 import { addScore, getTotalScore } from "../../components/gameControllers";
 import { useLocation } from "react-router-dom";
 
-export default function FriensGame() {
+export default function FriensGame({ usernames, socket, username, room }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
   const userData = useLocation().state;
-  var initiated = false;
+  userData.username = username;
+  userData.avatar = 1;  
+  var initiated = false;  
 
   const [scores, setScore] = useState([
-    ["Amit", 0, 100, 80, 60],
-    ["Mehraj", 0, 100, 80, 60],
-    ["Shawon", 0, 100, 80, 60],
-    ["Nafi", 0, 100, 80, 60],
+    [usernames[0], 0, 100, 80, 60],
+    [usernames[1], 0, 100, 80, 60],
+    [usernames[2], 0, 100, 80, 60],
+    [usernames[3], 0, 100, 80, 60],
   ]);
-  const peopleNames = ["John", "Jane", "Alex", "Mark", "Ella", "Liam", "Lucy", "Finn", "Kate", "Ryan", "Emma", "Luke", "Rose", "Paul", "Lisa", "Jack", "Anna", "Eric", "Mia", "Jake"];
 
-  const round = [100, 0, 60, 40];
+  const peopleNames = [
+    "John",
+    "Jane",
+    "Alex",
+    "Mark",
+    "Ella",
+    "Liam",
+    "Lucy",
+    "Finn",
+    "Kate",
+    "Ryan",
+    "Emma",
+    "Luke",
+    "Rose",
+    "Paul",
+    "Lisa",
+    "Jack",
+    "Anna",
+    "Eric",
+    "Mia",
+    "Jake",
+  ];
+  
   var totalScore = getTotalScore(scores);
-  console.log(totalScore);
 
-  useEffect(()=>{
-    console.log("rerender");
-    console.log(userData.players);
-  }, [scores]);
+  function initiateGame() {          
+    const newScore = [[usernames[0]], [usernames[1]], [usernames[2]], [usernames[3]]];
+    setScore(newScore);
+    console.log(usernames);
+    console.log(scores);
+    console.log(newScore);
 
-
-  function update(new_score){
-    setScore(new_score);
-  }
-
-  function initiateGame() {
-    //setScore([[userData.username], ["bot-1"], ["bot-1"],["bot-1"],  ]);   
-    const currentTimestamp = new Date().getTime();
-    const randomValue = currentTimestamp % 19;
-    const a = userData.players[1];
-    const b = peopleNames[randomValue+1];
-    const c = peopleNames[randomValue+2];
-
-   // setSelectedNames([userData.username,a,b,c]);
-
-   const allPlayers = userData.players;
-const myName = userData.username;
-
-// Exclude the current user's name
-const otherPlayers = allPlayers.filter(player => player !== myName);
-
-// Set selectedNames with [myName, ...otherPlayers]
-setSelectedNames([myName, ...otherPlayers]);
-    
-    setScore([[userData.username], [otherPlayers[0]], [otherPlayers[1]],[otherPlayers[2]],  ]); 
-   
     initiated = true;
   }
 
@@ -75,7 +73,16 @@ setSelectedNames([myName, ...otherPlayers]);
       />
       <div className="ai-canvas">
         <div className="ai-left">
-          <GameBoard totalScore={totalScore} scores={scores} addScore = {addScore} setScore={setScore} playerName={selectedNames}/>
+          <GameBoardOnline
+            totalScore={totalScore}
+            scores={scores}
+            addScore={addScore}
+            setScore={setScore}
+            playerName={usernames}
+            socket = {socket}
+            username = {username}
+            room = {room}
+          />
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>

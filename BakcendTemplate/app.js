@@ -14,7 +14,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-const usersInRoom = {};
+const usersInRoom = {}, curShuffle = {};
 io.on("connection", (socket) => {
 
   
@@ -30,13 +30,27 @@ io.on("connection", (socket) => {
      
       // Emit the updated list of users to the frontend
       io.to(data.room).emit("users_list", usersInRoom[data.room]);
-      
+      console.log(usersInRoom[data.room]);
      
     });
 
 
-  
+    socket.on("notify_others_to_start", (data) => {
+      const isStart = true;
+      curShuffle[data.room] = [];
+      io.to(data.room).emit("start_game", isStart);      
+      console.log(curShuffle);
+    });
+
+
     //guti shake
+    socket.on("guti_shake", (data) => {
+      curShuffle[data.room] = data.shuffleArray;
+      io.to(data.room).emit("recieve_shuffle", curShuffle[data.room]);
+      console.log("shuffle recived and sent to all", curShuffle[data.room]);
+    });
+
+
     // ke konta paise 
     //police kare dhorse
     //coninue
@@ -46,10 +60,18 @@ io.on("connection", (socket) => {
         socket.to(data.room).emit("receive_message", data);
       });
 
+      socket.on("berhoa", (data) => {
+        
+        usersInRoom[data.roomId] = usersInRoom[data.roomId].filter(user => user.id !== socket.id);
+        
+        io.to(data.roomId).emit("users_list", usersInRoom[data.roomId]);
+        console.log(usersInRoom[data.roomId]);
+      });
+
      
   socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
-  });
+    console.log("User Disconnected",  socket.id);    
+  });  
 });
 
 
