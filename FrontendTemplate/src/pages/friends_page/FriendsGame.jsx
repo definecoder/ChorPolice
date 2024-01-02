@@ -55,7 +55,7 @@ const otherPlayers = allPlayers.filter(player => player !== myName);
 // Set selectedNames with [myName, ...otherPlayers]
 setSelectedNames([myName, ...otherPlayers]);
     
-    setScore([[userData.username], [a], [b],[c],  ]); 
+    setScore([[userData.username], [otherPlayers[0]], [otherPlayers[1]],[otherPlayers[2]],  ]); 
    
     initiated = true;
   }
