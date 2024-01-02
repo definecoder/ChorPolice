@@ -40,14 +40,24 @@ const GutiButtonOnline = ({
     console.log(isChor);
   }, []);
 
+  function getIndex() {
+
+    if(scores[0][0] === username) return 0;
+    if(scores[1][0] === username) return 1;
+    if(scores[2][0] === username) return 2;
+    if(scores[3][0] === username) return 3;
+    return 0;
+
+  }
+
   const buttonClicking = (index) => {
     //console.log("before " + shufArray);
     //console.log("index : " + index);
-    const tmp = shufArray[index];
-    shufArray[index] = shufArray[0];
-    shufArray[0] = tmp;
-    //console.log("after" + shufArray);
-    setSelectedImage(shufArray[0]);
+    //const tmp = shufArray[index];
+    //shufArray[index] = shufArray[0];
+    //shufArray[0] = tmp;
+    //console.log("after" + shufArray);    
+    setSelectedImage(shufArray[getIndex()]);
 
     // TODO : DISTRIBUTE 3 to ai
     // res: [0, 1, 3, 2]

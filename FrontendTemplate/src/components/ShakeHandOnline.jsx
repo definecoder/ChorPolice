@@ -10,7 +10,7 @@ const ShakeHandOnline = ({
   playerName,
   socket,
   username,
-  room
+  room,
 }) => {
   const [showButton, setShowButton] = useState(false);
   const [showImage, setShowImage] = useState(false);
@@ -31,12 +31,19 @@ const ShakeHandOnline = ({
     if (username === scores[scores[0].length % 4][0]) {
       setShowButton(true);
     }
-  }, []);
+  }, [scores]);
 
   useEffect(() => {
-    if (socket) {      
+    if (socket) {
       socket.on("recieve_shuffle", (curShuff) => {
-        console.log(curShuff);
+        setShuffledArray(curShuff);
+        setShowButton(false);
+        setShowImage(true);
+
+        setTimeout(() => {
+          setShowImage(false);
+          setGuti(true);
+        }, 4200);
       });
     }
     return () => {
@@ -46,8 +53,11 @@ const ShakeHandOnline = ({
     };
   }, [socket]);
 
-  const handleButtonClick = () => {    
-    socket.emit("guti_shake", { room: room, shuffleArray: shuffleArray(shuffledArray) });
+  const handleButtonClick = () => {
+    socket.emit("guti_shake", {
+      room: room,
+      shuffleArray: shuffleArray(shuffledArray),
+    });
 
     // setShowButton(false);
     // setShowImage(true);
@@ -85,9 +95,12 @@ const ShakeHandOnline = ({
               scores={scores}
               addScore={addScore}
               setScore={setScore}
-              room = {room}
+              room={room}
               restart={() => {
-                setShowButton(true);
+                // console.log(scores[scores[0].length % 4][0] + " vs " + username );
+                // if (username === scores[scores[0].length % 4][0]) {
+                //   setShowButton(true);
+                // } else setShowButton(false);
                 setGuti(false);
               }}
             />
