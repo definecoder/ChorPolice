@@ -13,7 +13,7 @@ const GameBoardOnline = ({
   username,
   room
 }) => {
-  // Replace with the actual player name
+ 
   const playerImage = "";
 
   return (

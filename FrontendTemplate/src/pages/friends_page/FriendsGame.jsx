@@ -4,7 +4,7 @@ import { CommentOutlined } from "@ant-design/icons";
 import ChatModal from "../../components/ChatModal";
 import { useEffect, useState } from "react";
 import GameBoardOnline from "../../components/GameBoardOnline";
-
+import ScrollToBottom from "react-scroll-to-bottom";
 import { addScore, getTotalScore } from "../../components/gameControllers";
 import { useLocation } from "react-router-dom";
 
@@ -86,6 +86,7 @@ export default function FriensGame({ usernames, socket, username, room }) {
         </div>
         <div className="ai-right">
           <div>LEADERBOARD</div>
+          <ScrollToBottom className="message-container">
           <div className="leaderboard-body">
             {scores.map((score, index) => (
               <div className="leaderboard-col" key={index}>
@@ -98,6 +99,7 @@ export default function FriensGame({ usernames, socket, username, room }) {
               </div>
             ))}
           </div>
+          </ScrollToBottom>
         </div>
       </div>
     </>

@@ -7,9 +7,11 @@ import GameBoard from "../../components/GameBoard";
 
 import { addScore, getTotalScore } from "../../components/gameControllers";
 import { useLocation } from "react-router-dom";
+import ScoreModal from "../../components/ScoreModal";
 
 export default function AIPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
   const userData = useLocation().state;
   var initiated = false;
@@ -27,8 +29,23 @@ export default function AIPage() {
   console.log(totalScore);
 
   useEffect(()=>{
-    console.log("rerender");
+   
   }, [scores]);
+
+  useEffect(()=>{
+    console.log("Scoreee isss: ");
+    // console.log(scores[0][scores[0].length - 1]);
+    var maxScore = Math.max(...totalScore);
+     if(maxScore >= 140){
+      setIsGameOver(true);
+      console.log(isGameOver);
+      console.log("yes i am true")
+     }
+    
+  }, [totalScore]);
+
+
+
 
 
   function update(new_score){
@@ -56,6 +73,7 @@ export default function AIPage() {
 
   return (
     <>
+      <ScoreModal isGameOver={isGameOver} setIsGameOver={setIsGameOver} scores={scores} setScore={setScore}/>
       <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       <FloatButton
         icon={<CommentOutlined />}
