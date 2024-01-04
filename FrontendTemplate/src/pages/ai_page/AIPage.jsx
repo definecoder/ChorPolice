@@ -13,20 +13,24 @@ export default function AIPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
+  const [finalScore, setFinalScore]= useState([]);
+  const [rank, setRank] = useState([]);
+  
+  
   const userData = useLocation().state;
   var initiated = false;
 
   const [scores, setScore] = useState([
-    ["Amit", 0, 100, 80, 60],
-    ["Mehraj", 0, 100, 80, 60],
-    ["Shawon", 0, 100, 80, 60],
-    ["Nafi", 0, 100, 80, 60],
+    ["Amit", 0, 0, 0, 0],
+    ["Mehraj", 0, 0, 0, 0],
+    ["Shawon", 0, 0, 0, 0],
+    ["Nafi", 0, 0, 0, 0],
   ]);
   const peopleNames = ["John", "Jane", "Alex", "Mark", "Ella", "Liam", "Lucy", "Finn", "Kate", "Ryan", "Emma", "Luke", "Rose", "Paul", "Lisa", "Jack", "Anna", "Eric", "Mia", "Jake"];
 
   const round = [100, 0, 60, 40];
   var totalScore = getTotalScore(scores);
-  console.log(totalScore);
+ // console.log(totalScore);
 
   useEffect(()=>{
    
@@ -39,10 +43,51 @@ export default function AIPage() {
      if(maxScore >= 140){
       setIsGameOver(true);
       console.log(isGameOver);
-      console.log("yes i am true")
+      console.log("yes i am true");
+      rankingSet();
+      setFinalScore(totalScore);
+    
+      gameOverDetails();
      }
     
   }, [totalScore]);
+
+  function gameOverDetails(){
+
+    
+    var resetScores = scores.map(([name]) => [name]);
+    
+    setScore(resetScores);
+
+  }
+
+  function rankingSet(){
+
+    var newTotal = [...totalScore];
+
+var count = 1;
+
+var indexArray = [0, 0, 0, 0];
+
+
+while (newTotal.some(x => x > 0)) {
+  
+  var p = newTotal.indexOf(Math.max(...newTotal));
+  
+ 
+  indexArray[p] = count;
+  
+  
+  newTotal[p] = 0;
+  
+ 
+  count++;
+}
+
+    setRank(indexArray);
+        
+
+  }
 
 
 
@@ -73,8 +118,16 @@ export default function AIPage() {
 
   return (
     <>
-      <ScoreModal isGameOver={isGameOver} setIsGameOver={setIsGameOver} scores={scores} setScore={setScore}/>
-      <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    {isGameOver ? <ScoreModal isGameOver={isGameOver} 
+    setIsGameOver={setIsGameOver} 
+    scores={scores} 
+    setScore={setScore} 
+    finalScore={finalScore}
+    rank={rank}
+    />
+      :   <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+  }
+      
       <FloatButton
         icon={<CommentOutlined />}
         onClick={() => {

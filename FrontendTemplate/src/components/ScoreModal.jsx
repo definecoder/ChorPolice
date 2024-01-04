@@ -3,22 +3,49 @@ import { useState } from "react";
 
 
 const ScoreModal = (props) => {
-  const { isGameOver, setIsGameOver, scores , setScore} = props;
+  const { isGameOver, setIsGameOver, scores , setScore,  finalScore, rank} = props;
 
-  const [modalInput, setModalInput] = useState("");
-  const [modaTitle, setModalTitle] = useState("Enter your Message");
+  const [modaTitle, setModalTitle] = useState("Game Over");
+ 
+  
 
-  const resetModal = () => {
-    setModalInput("");
-    setIsGameOver(false);
-    setModalTitle("Enter your Message");
-  };
+
   const handleResetClick = () => {
     
     const resetScores = scores.map(([name]) => [name]);
     
     setScore(resetScores);
   };
+
+//   function rankingSet(){
+
+//     var newTotal = [...totalScore];
+
+// var count = 1;
+
+// var indexArray = [0, 0, 0, 0];
+
+
+// while (newTotal.some(x => x > 0)) {
+  
+//   var p = newTotal.indexOf(Math.max(...newTotal));
+  
+ 
+//   indexArray[p] = count;
+  
+  
+//   newTotal[p] = 0;
+  
+ 
+//   count++;
+// }
+
+//     setRank(indexArray);
+        
+
+//   }
+
+
 
   return (
     <Modal
@@ -27,20 +54,27 @@ const ScoreModal = (props) => {
       footer={<Button
         key="back"
         onClick={() => {                    
-          setModalInput("");
           setIsGameOver(false);
-          handleResetClick();
+          
         }}
       >
         Send
       </Button>}
     >
-      <Input
-        value={modalInput}
-        onChange={(e) => {
-          setModalInput(e.target.value);
-        }}
-      />
+        {isGameOver ?  <div>
+      {/* Display the result */}
+      <ul>
+        {scores.map((player, index) => (
+          <li key={index}>
+            {`${player[0]} got ${finalScore[index]} points. Rank: ${rank[index]}`}
+          </li>
+        ))}
+      </ul>
+    </div> :
+    <p>Result pending</p>
+    }
+       
+     
     </Modal>
   );
 };
