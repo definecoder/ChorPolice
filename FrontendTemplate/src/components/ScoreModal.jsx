@@ -3,49 +3,11 @@ import { useState } from "react";
 
 
 const ScoreModal = (props) => {
-  const { isGameOver, setIsGameOver, scores , setScore,  finalScore, rank} = props;
+  const { isGameOver, setIsGameOver, scores ,  finalScore, rank} = props;
 
   const [modaTitle, setModalTitle] = useState("Game Over");
  
   
-
-
-  const handleResetClick = () => {
-    
-    const resetScores = scores.map(([name]) => [name]);
-    
-    setScore(resetScores);
-  };
-
-//   function rankingSet(){
-
-//     var newTotal = [...totalScore];
-
-// var count = 1;
-
-// var indexArray = [0, 0, 0, 0];
-
-
-// while (newTotal.some(x => x > 0)) {
-  
-//   var p = newTotal.indexOf(Math.max(...newTotal));
-  
- 
-//   indexArray[p] = count;
-  
-  
-//   newTotal[p] = 0;
-  
- 
-//   count++;
-// }
-
-//     setRank(indexArray);
-        
-
-//   }
-
-
 
   return (
     <Modal
@@ -58,7 +20,7 @@ const ScoreModal = (props) => {
           
         }}
       >
-        Send
+        Restart
       </Button>}
     >
         {isGameOver ?  <div>
