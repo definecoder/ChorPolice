@@ -9,6 +9,7 @@ const Players = ({ playerName, playerImage, isTopBtm, playerScore }) => {
     <Wrapper>
       {isTopBtm ? (
         <div className="player-container-h">
+         
           <div className="image">
             {" "}
             <img src={playerImage} className="image" alt="" />{" "}
@@ -20,6 +21,7 @@ const Players = ({ playerName, playerImage, isTopBtm, playerScore }) => {
         </div>
       ) : (
         <div className="player-container">
+         
           <div className="image">
             {" "}
             <img src={playerImage} className="image" alt="" />{" "}

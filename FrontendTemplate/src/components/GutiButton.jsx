@@ -23,11 +23,11 @@ const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore
   var selectedIndex;
 
   const myguti = 0;
-  console.log(shufArray);
+  //console.log(shufArray);
 
   useEffect(() => {
     setIsChor(scores[0].length % 2 == 0);
-    console.log(isChor);
+    //console.log(isChor);
   }, []);
 
   const buttonClicking = (index) => {
