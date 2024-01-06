@@ -58,9 +58,10 @@ io.on("connection", (socket) => {
 
     //coninue
 
-    socket.on("send_message", (data) => {
-        console.log(data);
-        socket.to(data.room).emit("receive_message", data);
+    socket.on("send_message", (data) => {        
+        var msg = data.username + ": " + data.message;
+        console.log(msg);
+        io.to(data.room).emit("receive_message", msg);
       });
 
       socket.on("berhoa", (data) => {

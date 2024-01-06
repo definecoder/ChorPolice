@@ -17,6 +17,7 @@ const GameBoard = ({totalScore, scores, addScore, setScore, playerName}) => {
               playerImage={playerImage}
               playerScore={totalScore[3]}
               isTopBtm={true}
+              username={playerName[0]}
             />
           </div>
         </div>
@@ -27,6 +28,7 @@ const GameBoard = ({totalScore, scores, addScore, setScore, playerName}) => {
                 playerImage={playerImage}
                 playerScore={totalScore[1]}
                 isTopBtm={false}
+                username={playerName[0]}
               />
           </div>
           <div id="shake">
@@ -38,6 +40,7 @@ const GameBoard = ({totalScore, scores, addScore, setScore, playerName}) => {
               playerImage={playerImage}
               playerScore={totalScore[2]}
               isTopBtm={false}
+              username={playerName[0]}
             />
           </div>
         </div>
@@ -48,6 +51,7 @@ const GameBoard = ({totalScore, scores, addScore, setScore, playerName}) => {
             playerImage={playerImage}
             playerScore={totalScore[0]}
             isTopBtm={true}
+            username={playerName[0]}
           />
         </div>
       </div>

@@ -49,7 +49,7 @@ export default function FriensGame({ usernames, socket, username, room }) {
   }, []);
 
   useEffect(() => {
-    console.log("Scoreee isss: ");
+    console.log("Scoreee isss: ");    
     // console.log(scores[0][scores[0].length - 1]);
     var maxScore = Math.max(...totalScore);
     if (maxScore >= 140) {
@@ -100,7 +100,7 @@ export default function FriensGame({ usernames, socket, username, room }) {
           rank={rank}
         />
       ) : (
-        <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} socket={socket} username={username} room={room} />
       )}
       <FloatButton
         icon={<CommentOutlined />}
