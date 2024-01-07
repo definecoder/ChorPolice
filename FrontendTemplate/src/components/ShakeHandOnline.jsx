@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import shake from "../assets/shuffle.gif";
 import GutiButtonOnline from "./GutiButtonOnline";
+import { message } from "antd";
 
 const ShakeHandOnline = ({
   scores,
@@ -44,11 +45,25 @@ const ShakeHandOnline = ({
           setShowImage(false);
           setGuti(true);
         }, 4200);
-      });
+      });      
     }
     return () => {
       if (socket) {
         socket.off("recieve_shuffle");
+      }
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (socket) {      
+      socket.on("receive_message", (msg) => {
+        message.info(msg);
+        console.log(msg);
+      });
+    }
+    return () => {
+      if (socket) {
+        socket.off("receive_message");
       }
     };
   }, [socket]);

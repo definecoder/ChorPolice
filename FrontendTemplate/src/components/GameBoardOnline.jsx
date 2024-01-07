@@ -26,6 +26,7 @@ const GameBoardOnline = ({
               playerImage={playerImage}
               playerScore={totalScore[3]}
               isTopBtm={true}
+              username={username}
             />
           </div>
         </div>
@@ -36,6 +37,7 @@ const GameBoardOnline = ({
               playerImage={playerImage}
               playerScore={totalScore[1]}
               isTopBtm={false}
+              username={username}
             />
           </div>
           <div id="shake">
@@ -55,6 +57,7 @@ const GameBoardOnline = ({
               playerImage={playerImage}
               playerScore={totalScore[2]}
               isTopBtm={false}
+              username={username}
             />
           </div>
         </div>
@@ -65,6 +68,7 @@ const GameBoardOnline = ({
             playerImage={playerImage}
             playerScore={totalScore[0]}
             isTopBtm={true}
+            username={username}
           />
         </div>
       </div>

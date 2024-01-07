@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 const ChatModal = (props) => {
-  const { isModalOpen, setIsModalOpen } = props;
+  const { isModalOpen, setIsModalOpen, socket, username, room } = props;
 
   const [modalInput, setModalInput] = useState("");
   const [modaTitle, setModalTitle] = useState("Enter your Message");
@@ -14,6 +14,10 @@ const ChatModal = (props) => {
     setModalTitle("Enter your Message");
   };
 
+  const sentMsg = () => {
+      socket.emit("send_message", {message: modalInput, username: username, room: room});
+  }
+
   return (
     <Modal
       open={isModalOpen}
@@ -23,6 +27,7 @@ const ChatModal = (props) => {
         onClick={() => {                    
           setModalInput("");
           setIsModalOpen(false);
+          sentMsg();
         }}
       >
         Send
