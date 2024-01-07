@@ -16,7 +16,7 @@ export default function LandingPage() {
   }
 
   return (
-    <>
+    <div className="bg-gradient">
       <div className="landing-canvas">
         <div className="landing-left">
           <img src={appLogo} alt="Chor Dakat Babu Police" />
@@ -41,6 +41,6 @@ export default function LandingPage() {
           }}>continue</Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

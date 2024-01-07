@@ -1,7 +1,6 @@
 import "./AIPage.css";
 import { FloatButton } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
-import ChatModal from "../../components/ChatModal";
 import { useEffect, useState } from "react";
 import GameBoard from "../../components/GameBoard";
 
@@ -58,7 +57,7 @@ export default function AIPage() {
     console.log("Scoreee isss: ");
     // console.log(scores[0][scores[0].length - 1]);
     var maxScore = Math.max(...totalScore);
-    if (maxScore >= 140) {
+    if (maxScore >= 1500) {
       setIsGameOver(true);
       console.log(isGameOver);
       console.log("yes i am true");
@@ -105,11 +104,13 @@ export default function AIPage() {
     const randomValue = currentTimestamp % 19;
     const a = peopleNames[randomValue];
     const b = peopleNames[randomValue + 1];
-    const c = peopleNames[randomValue + 2];
+    const c = peopleNames[randomValue + 2];    
 
     setSelectedNames([userData.username, a, b, c]);
+    const tmpScore = [[userData.username], [a], [b], [c]];
+    console.log(tmpScore);
 
-    setScore([[userData.username], [a], [b], [c]]);
+    setScore(tmpScore);
 
     initiated = true;
   }
@@ -120,7 +121,7 @@ export default function AIPage() {
 
   return (
     <>
-      {isGameOver ? (
+      {isGameOver && (
         <ScoreModal
           isGameOver={isGameOver}
           setIsGameOver={setIsGameOver}
@@ -128,16 +129,7 @@ export default function AIPage() {
           finalScore={finalScore}
           rank={rank}
         />
-      ) : (
-        <ChatModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       )}
-
-      <FloatButton
-        icon={<CommentOutlined />}
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      />
       <div className="ai-canvas">
         <div className="ai-left">
           <GameBoard

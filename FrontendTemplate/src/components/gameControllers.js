@@ -29,10 +29,10 @@ export function updateScore(scores, move, guess) {
   var police;
 
   for (let i = 0; i < 4; i++) {
-    if (move[i] == 0) score[i] = 40;
-    else if (move[i] == 1) score[i] = 60;
-    else if (move[i] == 3) score[i] = 100;
-    else if (move[i] == 2) {
+    if (move[i] === 0) score[i] = 40;
+    else if (move[i] === 1) score[i] = 60;
+    else if (move[i] === 3) score[i] = 100;
+    else if (move[i] === 2) {
       score[i] = 80;
       police = i;
     }

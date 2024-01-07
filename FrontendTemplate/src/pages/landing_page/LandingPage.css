@@ -1,4 +1,8 @@
 /* Default styles for larger screens */
+body {  
+  background-image: linear-gradient(to right, #d3cce3, #e9e4f0); 
+}
+
 .landing-canvas {
   display: flex;
   height: 100vh;
@@ -44,6 +48,7 @@
 
 /* Media query for mobile devices (max-width: 768px) */
 @media screen and (max-width: 768px) {
+
   .landing-canvas {
     margin-top: 5vh;
     flex-direction: column;

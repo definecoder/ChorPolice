@@ -79,7 +79,9 @@ const Wrapper = styled.section `
     font-size: 20px;
     height: 40px;
     width: 200px;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px 20px;
     border: none;
     border-radius: 20px;

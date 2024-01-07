@@ -7,7 +7,14 @@ import chor from "../assets/chor.png";
 import dakat from "../assets/dakat.png";
 import { Button } from "antd";
 
-const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore }) => {
+const GutiButton = ({
+  playerName,
+  shufArray,
+  restart,
+  scores,
+  addScore,
+  setScore,
+}) => {
   const [showButton, setShowButton] = useState(true);
   const [showImage, setShowImage] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
@@ -17,7 +24,7 @@ const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore
   const [policeGuess, setPoliceGuess] = useState(-1);
   const [isChor, setIsChor] = useState(true);
   const gotImage = [chor, dakat, police, babu];
-  const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];    
+  const bangla = ["চোর", "ডাকাত", "পুলিশ", "বাবু"];
   var curscore = [0, 0, 0, 0];
 
   var selectedIndex;
@@ -36,7 +43,7 @@ const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore
     const tmp = shufArray[index];
     shufArray[index] = shufArray[0];
     shufArray[0] = tmp;
-    //console.log("after" + shufArray);
+    console.log("after" + shufArray);
     setSelectedImage(shufArray[0]);
 
     // TODO : DISTRIBUTE 3 to ai
@@ -60,32 +67,28 @@ const GutiButton = ({ playerName, shufArray, restart, scores, addScore, setScore
     }
   }
 
-  function getChorDakat(){
+  function getChorDakat() {
     var ans = [];
-    for(var i = 0; i < 4; i++){
-      if(shufArray[i] < 2) ans.push(i);
+    for (var i = 0; i < 4; i++) {
+      if (shufArray[i] < 2) ans.push(playerName[i]);
     }
     return ans;
   }
 
-  function isPoliceCorrect(){
-    if(isChor && shufArray[policeGuess] == 0) return true;
-else if(!isChor && shufArray[policeGuess] == 1) return true;
-    else{
+  function isPoliceCorrect() {
+    if(policeGuess === -1) {
       const currentTimestamp = new Date().getTime();
-    const randomValue = currentTimestamp % 2;
-
-      if(randomValue==0){
-         return true;
-      }
-      else return false;
+      const randomValue = currentTimestamp % 2;
+      setPoliceGuess(getChorDakat()[randomValue]);
     }
+    if (isChor && policeGuess === getPolice(0)) return true;
+    else if (!isChor && policeGuess === getPolice(1)) return true;    
     return false;
   }
 
   function getScore() {
     const newScores = [0, 0, 0, 0]; // Create a new array to store the updated scores
-  
+
     for (let i = 0; i < 4; i++) {
       if (shufArray[i] === 3) newScores[i] = 100;
       else if (shufArray[i] === 2 && isPoliceCorrect()) newScores[i] = 80;
@@ -99,10 +102,9 @@ else if(!isChor && shufArray[policeGuess] == 1) return true;
         } else newScores[i] = 40;
       }
     }
-  
+
     return newScores;
   }
-  
 
   return (
     <Wrapper>
@@ -110,16 +112,22 @@ else if(!isChor && shufArray[policeGuess] == 1) return true;
         <div className="gutis">
           {lastState && (
             <div className="last-card">
-              {isPoliceCorrect() ? "পুলিশ সঠিক ধরেছেন" : "পুলিশ ভূল ধরেছেন"} <br />
-              চোর <span>{isChor && isPoliceCorrect() ? "+০" : "+৪০"}</span> <br />                 
-              ডাকাত <span>{!isChor && isPoliceCorrect() ? "+০" : "+৬০"}</span> <br />
+              {isPoliceCorrect() ? "পুলিশ সঠিক ধরেছেন" : "পুলিশ ভূল ধরেছেন"}{" "}
+              <br />
+              চোর <span>{isChor && isPoliceCorrect() ? "+০" : "+৪০"}</span>{" "}
+              <br />
+              ডাকাত <span>
+                {!isChor && isPoliceCorrect() ? "+০" : "+৬০"}
+              </span>{" "}
+              <br />
               বাবু <span>+১০০</span> <br />
               পুলিশ <span>{isPoliceCorrect() ? "+৮০" : "+০"}</span> <br />
               <Button
                 onClick={() => {
                   setLastState(false);
-                  curscore = getScore();                                    
-                  setScore(addScore(curscore, scores));                
+                  curscore = getScore();
+                  setScore(addScore(curscore, scores));
+                  setPoliceGuess(-1);
                   restart();
                 }}
               >
@@ -152,7 +160,13 @@ else if(!isChor && shufArray[policeGuess] == 1) return true;
                   </div>
                 </div>
               </div>
-              <div> <center> {isChor == true ? "চোর কে ধরুন" : "ডাকাত কে ধরুন" } </center> </div>
+              <div>
+                {" "}
+                <center>
+                  {" "}
+                  {isChor == true ? "চোর কে ধরুন" : "ডাকাত কে ধরুন"}{" "}
+                </center>{" "}
+              </div>
               <div className="police-state-btm">
                 {selectedImage == 2 && (
                   <div classsName="police-state-btm">
@@ -160,21 +174,21 @@ else if(!isChor && shufArray[policeGuess] == 1) return true;
                       className="jayga"
                       onClick={() => {
                         setLastState(true);
-                        setPoliceState(false);      
-                        setPoliceGuess((getChorDakat())[0]);
+                        setPoliceState(false);
+                        setPoliceGuess(getChorDakat()[0]);
                       }}
                     >
-                      {(getChorDakat())[0]}
+                      {getChorDakat()[0]}
                     </Button>
                     <Button
                       className="jayga"
                       onClick={() => {
                         setLastState(true);
                         setPoliceState(false);
-                        setPoliceGuess((getChorDakat())[1]);
+                        setPoliceGuess(getChorDakat()[1]);
                       }}
                     >
-                      {(getChorDakat())[1]}
+                      {getChorDakat()[1]}
                     </Button>
                   </div>
                 )}
