@@ -30,6 +30,13 @@
     border: 1px solid black;
 }
 
+.score-row-element{
+    display:block;
+    width:100%;
+    height: 30px;
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
     .ai-canvas{
         flex-direction: column;        

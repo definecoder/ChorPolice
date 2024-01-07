@@ -89,17 +89,22 @@ const Wrapper = styled.section`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 275px;
+      height: 150px;
+    }
+    .color-name {
+      font-size: 15px;
     }
     .player-container .image {
-      margin-top: -20px;
+      /* margin-top: -20px; */
       max-height: 70%;
     }
     .player-container .r8 {
-      margin-top: -80px;
+      margin-top: -30px;
+      font-size: 15px;
     }
     .r8 {
-      margin-top: -30px;
+      /* margin-top: -10px; */
+      font-size: 15px;
       padding: 0px;
     }
     .image {
@@ -107,8 +112,7 @@ const Wrapper = styled.section`
       max-height: 100%;
     }
     .name {
-      font-size: 25px;
-      padding: 20px;
+      font-size: 15px;
     }
   }
 `;

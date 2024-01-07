@@ -146,7 +146,7 @@ export default function AIPage() {
             {scores.map((score, index) => (
               <div className="leaderboard-col" key={index}>
                 {score.map((point, idx) => (
-                  <span key={idx}>
+                  <span className="score-row-element" key={idx}>
                     {point}
                     <br />
                   </span>
